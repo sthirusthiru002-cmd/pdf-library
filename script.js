@@ -1,10 +1,13 @@
+let allPDFs = [];
+
 async function loadPDFs() {
   const response = await fetch("data.json");
-  const pdfs = await response.json();
+  allPDFs = await response.json();
+  displayPDFs(allPDFs);
+}
 
+function displayPDFs(pdfs) {
   const container = document.getElementById("pdf-list");
-  if (!container) return;
-
   container.innerHTML = "";
 
   pdfs.forEach(pdf => {
@@ -22,5 +25,17 @@ async function loadPDFs() {
     `;
   });
 }
+
+document.addEventListener("input", function(e) {
+  if (e.target.id === "search") {
+    const text = e.target.value.toLowerCase();
+
+    const result = allPDFs.filter(pdf =>
+      pdf.title.toLowerCase().includes(text)
+    );
+
+    displayPDFs(result);
+  }
+});
 
 loadPDFs();
