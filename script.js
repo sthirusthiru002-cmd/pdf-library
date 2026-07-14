@@ -39,3 +39,15 @@ document.addEventListener("input", function(e) {
 });
 
 loadPDFs();
+document.getElementById("categoryFilter").addEventListener("change", function () {
+
+    const category = this.value;
+
+    if (category === "All") {
+        displayPDFs(allPDFs);
+    } else {
+        const filtered = allPDFs.filter(pdf => pdf.category === category);
+        displayPDFs(filtered);
+    }
+
+});
